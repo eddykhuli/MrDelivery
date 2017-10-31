@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" ng-app="app"  ng-controller="HomeController">
+    <head>
+        <title>Home page</title>
+        <script src="../js/angular.js" type="text/javascript"></script>
+        <script src="../app.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.min.js"></script>
+        <style>
+
+            body {
+                font-family: "Lato", sans-serif;
+                background-color: skyblue;
+            }
+
+            .sidenav {
+                height: 100%;
+                width: 0;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                right: 0;
+                background-color: #111;
+                overflow-x: hidden;
+                transition: 0.5s;
+                padding-top: 60px;
+            }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+            .sidenav a:hover {
+                color: #f1f1f1;
+            }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+
+            @media screen and (max-height: 450px) {
+                .sidenav {padding-top: 15px;}
+                .sidenav a {font-size: 18px;}
+            }
+            .bg-overlay {
+                background:  url("/js/05_Homepage_News.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                color: #fff;
+                height: 450px;
+                padding-top: 50px;
+            }
+
+
+
+
+            .bg-no-overlay {    
+                background: url("/js/background2.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                color: #fff;
+                height: 450px;
+                padding-top: 50px;
+            }
+        </style>
+
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        </script>
+
+    </head>
+    <body>
+
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Mrdfood</a> <img src="../mrd.png" class="img-responsive"/>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://localhost:8080/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="http://localhost:8080/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><div id="mySidenav" class="sidenav">
+                            <h4 >welcome {{info}}</h4>
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="http://localhost:8080/login/customer/restaurants">Place a new order</a>
+                            <a href="#" ng-click="viewOrders()">Order history</a>
+                            <a href="" ng-click="viewProfile()">Profile  <span class="glyphicon glyphicon-user"></span></a>
+                            <a href="/home/faqs">FAQ's</a>
+                            <a href="/home/terms">Terms and Conditions</a>
+                            <a href="#" ng-click="logout()">Logout <span class="glyphicon glyphicon-log-out"></span></a>
+                        </div>
+                        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+                    </li>
+                </ul>
+            </div>
+
+
+        </nav>
+
+
+        <div class="container bg-overlay">
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+
+                <div class="row-offcanvas-left"><img src="/js/mrd.png" class="img-responsive" width="100px" height="100px" border="solid"/><span style="font-family: fantasy;font-style: oblique;color: yellow;text-align: right;text-align: left;font-size:2vw;">SA'S FAVOURITE FOOD DELIVERY</span></div>
+
+            </div>
+
+
+            <div class="form-signin">
+                Select Location
+                <select class="form-control top"  required="required" ng-model="getChow" style="width: 250px; align:left"  ng-options="location for location in locations">
+                </select>
+                <button  class="btn btn-lg btn-primary btn-block"  style="width: 250px; align:center" type="submit" ng-click="placeAnOrder()">Get chow delivered</button>
+            </div>
+
+
+        </div>
+
+
+        <br/><br/>
+        <div class="row text-center">
+            <h1 style="font-family: fantasy;color:black">WHAT DO YOU FEEL LIKE?<br/></h1>
+            <h4>Get it delivered from over 1600 restaurants, including SA’s favourites...</h4>
+            <br/><br/>
+        </div>
+        <section>
+            <div ng-repeat="restaurant in restaurants">
+                <marquee scrolldelay="10" direction="right" >
+                     <table>
+                         <tr>
+                           <img src="{{restaurant.image}}" alt="" style=" height: 80px; width: 80px;" class="thumbnail"/>
+                         </tr>
+                     </table>
+                </marquee>
+            </div>
+        </section>
+        <div class="container bg-no-overlay">
+            <div class="row text-center">
+                <table align="center">
+                    <tr>
+                        <td>
+                            <div id="myDiv"  style="background-image:url(/js/bike2.jpg); height: 200px; width: 400px; border: 1px solid black;">
+                                <form class="form-signin" >
+                                    <h2 class="form-signin-heading" style="color:white"><b >Become a Driver</b></h2>
+                                    <button  class="btn btn-lg btn-primary btn-block" type="submit" ng-click="driver()" >Enquire</button>
+                                </form>
+                            </div>
+                        </td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <div   style="background-image:url(/js/res.jpg); height: 200px; width: 400px; border: 1px solid black;">
+                                <form class="form-signin" >
+                                    <h2 class="form-signin-heading" style="color:white"><b>Become a Partner</b></h2>
+                                    <button  class="btn btn-lg btn-primary btn-block" type="submit" ng-click="partner()" >Enquire</button>
+                                </form>
+
+
+
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+                <br/><br/>
+
+            </div>
+        </div>
+        
+      
+        <center><strong><h2>Delivering to over 1900 suburbs in SA, including:</h2></strong></center>
+                <div class="container ">
+                     <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget">Western Cape</h1>
+                                <ul>
+                                    <li><i class="fa fa-angle-double-right"></i>  Bantry Bay</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Brackenfell</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Camps Bay</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Cape Town</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Claremont</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Clifton</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Craighall</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Constantia</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Gordons Bay</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Green Point</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Kenilworth</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Milnerton</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Muizenburg</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Newlands</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Observatory</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Parow</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Sea Point</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Somerset West</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Stellenbosch</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Tableview</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Tokai</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Tygervalley</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Woodstock</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Wynberg</li>
+                                </ul>
+                            </li>
+                        </ul>
+                 </div>
+                 
+                <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget">Johannesburg</h1>
+                                <ul>
+                                    <li><i class="fa fa-angle-double-right"></i>  Alberton</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Bedfordview</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Benoni</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Boksburg</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Bryanston</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Menlyn</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Craighall</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Cresta</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Dainfern</li>
+                                    <li><i class="fa fa-angle-double-right"></i> East Rand Mall</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Edenvale</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Fordsburg</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Glenvista</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Greenside</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Illovo</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Kempton Park</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Lonehill</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Melville</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Midrand</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Northgate</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Norwood</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Parkhurst</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Parktown North</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Parkview</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Randburg</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Rivonia</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Rosebank</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Ruimsig</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Sandton</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Southern Suburbs</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Sunninghill</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Weltevredenpark</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Westrand</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Woodmead</li>
+                                </ul>
+                            </li>
+                        </ul>
+                 </div>
+             
+                <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget">Pretoria</h1>
+                                <ul>
+                                    <li><i class="fa fa-angle-double-right"></i>  Brooklyn</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Centurion</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Hatfield</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Lynnwood</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Menlopark</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Menlyn</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Moreleta Park</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Riefontein</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Waterkloof</li>
+                                </ul>
+                            </li>
+                        </ul>
+                 </div>
+                <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget">KwaZulu-Natal</h1>
+                                <ul>
+                                    <li><i class="fa fa-angle-double-right"></i>  Ballito</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Berea</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Durban North</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Glenwood</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Hillcrest</li>
+                                    <li><i class="fa fa-angle-double-right"></i> La Lucia</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Morningside</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Pietermaritzburg</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Umhlanga</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Westville</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                
+                    <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget"> Rest of SA</h1>
+                                <ul>
+                                    <li><i class="fa fa-angle-double-right"></i> Bloemfontein</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  East London</li>
+                                    <li><i class="fa fa-angle-double-right"></i>  Kimberley</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Nelspruit</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Polokwane</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Port Elizabeth</li>
+                                    <li><i class="fa fa-angle-double-right"></i> Potchefstroom</li>
+                                    <li><i class="fa fa-angle-double-right"></i> and many more...</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+       <br/>
+       <br/>
+       <br/>
+       <br/>
+       <br/>
+       <br/>
+       <br/>
+       
+        <footer  style="background-color: black;color: white">
+            <div class="container">
+                <div class="row"><!-- row -->
+                    <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget">Useful links</h1>
+                                <ul>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i> Business Solutions</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i> Contact Us</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i> Drive With Us</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i> Work at Mr D</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i> Radio Adverts</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  FAQ's</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>   Useful Links</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>    Restaurant Signup</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- widgets column left end -->
+                    <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget">Useful links</h1>
+                                <ul>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  Test Series Schedule</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  Postal Coaching</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  PG Dr. Bhatia Books</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  UG Courses</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  Satellite Education</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  Study Centres</a></li>
+                                    <li><a  href="#"><i class="fa fa-angle-double-right"></i>  State P.G. Mocks</a></li>
+                                    <li><a  href="#" target="_blank"><i class="fa fa-angle-double-right"></i> Results</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- widgets column left end -->
+                    <div class="col-lg-3 col-md-3"><!-- widgets column left -->
+                        <ul class="list-unstyled clear-margins"><!-- widgets -->
+                            <li class="widget-container widget_nav_menu"><!-- widgets list -->
+                                <h1 class="title-widget">Useful links</h1>
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Enquiry Form</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Online Test Series</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Grand Tests Series</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Subject Wise Test Series</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Smart Book</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Test Centres</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i>  Admission Form</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i>  Computer Live Test</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- widgets column left end -->
+                </div>
+            </div>
+        </footer>
+        <!--header-->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="copyright">
+                            © 2017, MrDfood, All rights reserved
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="design">
+                            <a target="_blank" href="#">@EddyKThobela Developer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
