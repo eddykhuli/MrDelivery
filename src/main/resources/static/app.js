@@ -104,14 +104,15 @@ app.controller('HomeController', ['$scope', 'store', "$window", "$http", functio
         };
         
        $scope.viewOrders = function(){
-            
-            $http.get('/api/orderInfo/login/customer/viewOrders/'+$scope.loggedInAccount.userId,config).then(function(response){
-                alert("working");
+             $window.location.href = "/login/customer/orders";
+           
+       };
+        $http.get('/api/orderInfo/login/customer/viewOrders/'+$scope.loggedInAccount.userId,config).then(function(response){
+               
                 console.log(response.data);
                 $scope.orderInfo = response.data;
-                $window.location.href = "/login/customer/orders";
+               
             });
-       };
 
     }]);
 app.controller('Registration', ['$scope', '$http','$window', function ($scope, $http,$window) {
