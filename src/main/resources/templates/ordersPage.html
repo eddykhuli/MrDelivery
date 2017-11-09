@@ -14,23 +14,46 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     </head>
     <body ng-app="app" ng-controller="HomeController">
-        <div>Orders </div>
-       <div class="col-sm-8 text-left"> 
-                    <h1 style="text-align:center">Orders</h1>
-                    
-                        <h3 style="text-align:center">Details</h3>
-                        <div class="container">
-                   <div class="panel panel-default">
-                     <div class="panel-body"></div>
-                     <label>Order Id</label>
-                     <label>{{orderInfo.OrderId}}  </label><br/>
-                     <label>Status </label><br/>
-                      <label>{{orderInfo.status}}</label><br/>
-                      <label>Cell phone number</label>
-                       <label>{{orderInfo.orderDate}}</label>
-                      
-                   </div>
-                 </div>
+     
+         <div class="container-fluid text-center">    
+            <div class="row content">
+                <div class="col-sm-2 sidenav">
+                  
+                    <ul  class="nav nav-pills">
+                        <li class="active" ng-click="viewOrders()">
+                            <a href="#1a" data-toggle="tab">My Orders</a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+         </div>
+        
+        <div class="tab-content clearfix">
+            <div class="tab-pane active" id="1a">
+           <section>
+            <table class="table table-hover">
+                <h1>Orders</h1>
+                <thead>
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Status</th>
+                        <th>Order Date</th>
+                        <th>Total to pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="order in orderInfo">
+                        <td>{{order.OrderId}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.orderDate}}</td>
+                        <td>{{order.total}}</td>
+                        <td><button ng-click="updateOrder(order)">update</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+                
+            </div>
+        </div>
     </body>
 </html>
