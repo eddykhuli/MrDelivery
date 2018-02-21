@@ -52,6 +52,10 @@ public class OrderInfoService {
         toOrder.setRestaurantName(order.getRestaurantName());
         toOrder.setOrderDate(order.getOrderDate());
         orderRepo.save(toOrder);
+        toOrder.setDeliveryAddress(order.getDeliveryAddress());
+        toOrder.setContactNO(order.getContactNO());
+        toOrder.setEmailAddress(order.getEmailAddress());
+
         return order;
     }
     public OrderInfo getUserOrder(long userId)
@@ -90,4 +94,6 @@ public class OrderInfoService {
         orderRepo.findByStatus(status).forEach(toDeliverOrders :: add);
         return toDeliverOrders;
     }
+    
+   
 }

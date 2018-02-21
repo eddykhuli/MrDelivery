@@ -8,6 +8,8 @@ package com.example.demo.controllers;
 import com.example.demo.entities.Account;
 import com.example.demo.service.NotificationService;
 import io.swagger.annotations.Api;
+import java.util.logging.Level;
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,15 +36,11 @@ public class NotificationController {
    
     //private Logger logger = new LoggerFactory.getLogger(NotificationController.class);
     @RequestMapping(value="/sendPasswordToPartner" , method = RequestMethod.POST)
-    public String  sendEmail(@RequestBody @Valid Account account)
+    public String  sendEmail()
     {   
-       try{
-            service.sendEMail(account);
-              return "sent Email";
-       }
-       catch(MailException e){}
-        return "error in sending mail :";
-       
+
+       return service.sendEmailRe();
+        
     }
     
    

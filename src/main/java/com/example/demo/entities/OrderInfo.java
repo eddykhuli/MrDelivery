@@ -26,8 +26,6 @@ public class OrderInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
     private String orderId;
      private long userId;
     private double subTotal;
@@ -38,34 +36,26 @@ public class OrderInfo implements Serializable {
     private List<Product> cartItems =new ArrayList<>();
     private String restaurantName;
     private String orderDate;
+    private String deliveryAddress;
+    private String contactno;
+    private String emailAddress;
+    
 
     public OrderInfo() {
     }
 
-    public OrderInfo( String orderId,long userId, double subTotal, double total, String status, String collectionType,String restaurantName,String orderDate) {
+    public OrderInfo(String orderId, long userId, double subTotal, double total, String status, String collectionType, String restaurantName, String orderDate, String deliveryAddress, String contactno, String emailAddress) {
         this.orderId = orderId;
-         this.userId = userId;
+        this.userId = userId;
         this.subTotal = subTotal;
         this.total = total;
         this.status = status;
         this.collectionType = collectionType;
         this.restaurantName = restaurantName;
-    }
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
+        this.orderDate = orderDate;
+        this.deliveryAddress = deliveryAddress;
+        this.contactno = contactno;
+        this.emailAddress = emailAddress;
     }
 
     public String getOrderId() {
@@ -74,6 +64,14 @@ public class OrderInfo implements Serializable {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public double getSubTotal() {
@@ -131,6 +129,33 @@ public class OrderInfo implements Serializable {
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+
+    public String getContactNO() {
+        return contactno;
+    }
+
+    public void setContactNO(String contactNO) {
+        this.contactno = contactNO;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+
     
    
     

@@ -370,19 +370,19 @@ app.controller('AdminController', ['$scope', '$http', '$window','store', functio
 
         $scope.sendPassword = function(rests){
             
-            $http.get('/api/account/login/account/findUserAccount/'+rests.id,config).then(function(response){
-                console.log(response);
-                        var mailData = {
-                    "email" :  response.data.email,
-                     "password" : response.data.password
-                  };
-            console.log(mailData);
-            $scope.obj = JSON.parse(mailData);
-            console.log($scope.obj);
-                    $http.post('/api/notification/sendPasswordToPartner', $scope.obj,config).then(function(response){
+            //$http.get('/api/account/login/account/findUserAccount/'+rests.id,config).then(function(response){
+                //console.log(response);
+//                        var mailData = {
+//                    "email" : response.data,
+//                     "password" : "gyxrWgx"
+//                  };
+//            console.log(mailData);
+//            $scope.obj = mailData;
+//            console.log($scope.obj);
+                    $http.post('/api/notification/sendPasswordToPartner',config).then(function(response){
                        console.log(response);
                    });
-            });
+            //});
             
 //            console.log(rests);
 ////           
@@ -768,7 +768,10 @@ app.controller('CartController', ['$scope','$http','store','$window', function (
             'status' : 'Received',
             'cartItems' : $scope.userCart,
             'restaurantName' :  $scope.restName,
-            'orderDate' : orderDate
+            'orderDate' : orderDate,
+            'emailAddress': "eddyk@gmail.com",
+            'contactno' : "022521315",
+            'deliveryAddress' : "kjhghkjbh"
         };
         console.log(orderInfo);
         $scope.orderInfo = orderInfo;

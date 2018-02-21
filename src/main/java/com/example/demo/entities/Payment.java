@@ -23,7 +23,6 @@ public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     private String orderId;
     private long userId;
     private String status;

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author User
  */
 @RestController
-@RequestMapping(path = "/api/driver/")
+@RequestMapping(path = "/api/driver/", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(value = "DriverControllerApi" , produces = MediaType.APPLICATION_JSON_VALUE)
 public class DriverController {
     

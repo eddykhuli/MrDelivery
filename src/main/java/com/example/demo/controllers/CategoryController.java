@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author User
  */
 @RestController
-@RequestMapping(path = "/api/category/")
+@RequestMapping(path = "/api/category/", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(value = "CategoryControllerApi" , produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
     
